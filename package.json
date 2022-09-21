@@ -1,0 +1,23 @@
+{
+  "name": "coin-price-discord-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "nodemon src/server.ts",
+    "build": "tsc -p ."
+  },
+  "author": "SD17",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.3.0"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.3.2",
+    "@types/node": "^18.7.18",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3"
+  }
+}
