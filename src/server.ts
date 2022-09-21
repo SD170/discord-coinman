@@ -1,4 +1,7 @@
-import { REST, Client, GatewayIntentBits, Routes, Interaction, BaseInteraction, channelLink, ChatInputCommandInteraction } from 'discord.js';
+import { REST, Client, GatewayIntentBits, Routes, BaseInteraction, } from 'discord.js';
+
+import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+
 import dotenv from "dotenv";
 
 
@@ -56,6 +59,12 @@ client.on("interactionCreate", (interaction: BaseInteraction) => {
             interaction.reply({
                 "content": result,
             });
+        } else if (interaction.commandName === "teamplayer") {
+            const teamName = interaction.options.getString("team");
+            const playerName = interaction.options.getString("player");
+            interaction.reply({
+                "content": `Fav team: ${teamName}, and player: ${playerName}`,
+            });
         } else {
             console.log("Interaction: Chat input command");
             interaction.reply({
@@ -68,6 +77,57 @@ client.on("interactionCreate", (interaction: BaseInteraction) => {
 
 
 const main = async () => {
+
+    const favTeamPlayer = new SlashCommandBuilder()
+        .setName("teamplayer")
+        .setDescription("Select your favorite team and player")
+        .addStringOption((option: SlashCommandStringOption) => {    // first string options
+            return option.setName("team")   // option details
+                .setDescription("Select your favorite team")
+                .setRequired(true)
+                .setChoices(    // option choices
+                    {
+                        name: "Man UTD",
+                        value: "Manchester United"
+                    },
+                    {
+                        name: "Real Madrid",
+                        value: "Real Madrid"
+                    },
+                    {
+                        name: "Juve",
+                        value: "Juventus"
+                    },
+                    {
+                        name: "Spotring",
+                        value: "Sporting Lisbon"
+                    }
+                )
+        })
+        .addStringOption((option: SlashCommandStringOption) => {    // first string options
+            return option.setName("player")   // option details
+                .setDescription("Select your favorite plater")
+                .setRequired(true)
+                .setChoices(    // option choices
+                    {
+                        name: "CR7",
+                        value: "Cristiano Ronaldo"
+                    },
+                    {
+                        name: "Messi",
+                        value: "Lionel Messi"
+                    },
+                    {
+                        name: "Neymar",
+                        value: "Neymar Jr"
+                    },
+                    {
+                        name: "Mbappe",
+                        value: "Kylian Mbappe"
+                    }
+                )
+        })
+
     const commands = [
         {
             name: "tester",
@@ -112,7 +172,8 @@ const main = async () => {
                     ]
                 }
             ]
-        }
+        },
+        favTeamPlayer.toJSON() // the command in json: command body basically
 
     ]
 
