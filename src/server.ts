@@ -46,8 +46,15 @@ client.on("interactionCreate", (interaction: BaseInteraction) => {
             // interaction.options.get("jersey")?.name; // pass: the arg/optn res: "jersey" 
             // interaction.options.get("jersey")?.value; // pass: the arg/optn res: the value of arg/optn 
             const jerseyNo = interaction.options.getString("jersey"); // pass: the arg/optn res: the value of arg/optn 
+            const cleatName = interaction.options.getString("cleat"); // pass: the arg/optn res: the value of arg/optn 
             interaction.reply({
-                "content": `Your jersey no is ${jerseyNo}`,
+                "content": `Your jersey no is ${jerseyNo}, and yout boot cleat name is ${cleatName}`,
+            });
+        } else if (interaction.commandName === "selectgoat") {
+            const goatName = interaction.options.getString("goat");
+            const result = goatName === "cristiano ronaldo" ? "You're right!!" : "Dead wrong!!"
+            interaction.reply({
+                "content": result,
             });
         } else {
             console.log("Interaction: Chat input command");
@@ -75,9 +82,38 @@ const main = async () => {
                     description: "your jersey number",
                     type: 3,
                     required: true
+                },
+                {
+                    name: 'cleat',
+                    description: "your cleat name",
+                    type: 3,
+                    required: true
+                }
+            ]
+        },
+        {
+            name: "selectgoat",
+            description: "select the goat",
+            options: [
+                {
+                    name: 'goat',
+                    description: "name of the goat",
+                    type: 3,
+                    required: true,
+                    choices: [
+                        {
+                            name: 'cr7', // placeholder
+                            value: 'cristiano ronaldo' // actual value
+                        },
+                        {
+                            name: 'messi',
+                            value: 'lionel messi'
+                        }
+                    ]
                 }
             ]
         }
+
     ]
 
     try {
