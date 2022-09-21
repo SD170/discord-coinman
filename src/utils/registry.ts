@@ -1,6 +1,5 @@
 import path from "path";
 import fs from "fs/promises";
-import { BaseSlashCommandI } from '../utils/BaseSlashCommand';
 
 export async function registerCommands(client: SuperClient, dir = '') {
   const filePath = path.join(__dirname, dir);

@@ -1,4 +1,3 @@
-import { BaseSlashCommandI } from '../../utils/BaseSlashCommand';
 import { SlashCommandBuilder, SlashCommandStringOption } from '@discordjs/builders';
 const teamPlyer: BaseSlashCommandI = {
     name: "player",

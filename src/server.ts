@@ -1,10 +1,9 @@
-import { REST, Client, GatewayIntentBits, Routes, BaseInteraction, Collection, } from 'discord.js';
+import { REST, Client, GatewayIntentBits, Routes, BaseInteraction, Collection, ChannelType, } from 'discord.js';
 
 import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
 
 import dotenv from "dotenv";
 import { registerCommands } from './utils/registry';
-import { BaseSlashCommandI } from './utils/BaseSlashCommand';
 
 
 //load env vars
@@ -33,8 +32,23 @@ const rest = new REST({ version: '10' }).setToken(BOT_TOKEN);
 
 
 
+
 client.on("ready", () => {
     console.log(`${client.user?.tag} has logged in`);
+})
+
+//joined a server
+client.on("guildCreate", guild => {
+    // Create a new channel with permission overwrites
+    guild.channels.create({
+        name: 'coin-man-hub',
+        type: ChannelType.GuildText
+    })
+})
+
+// removed from a server
+client.on("guildDelete", guild => {
+    // removed
 })
 
 // client.on("messageCreate", (message) => {
@@ -44,13 +58,13 @@ client.on("ready", () => {
 // })
 
 client.on("interactionCreate", (interaction: BaseInteraction) => {
-    if(interaction.isChatInputCommand()){
-        const {commandName} = interaction;
-        const cmd:BaseSlashCommandI = client.slashCommands.get(commandName);
-        if(cmd){
+    if (interaction.isChatInputCommand()) {
+        const { commandName } = interaction;
+        const cmd: BaseSlashCommandI = client.slashCommands.get(commandName);
+        if (cmd) {
             cmd.execute(client, interaction);
-        }else{
-            interaction.reply({content:"This command has no execute method :("})
+        } else {
+            interaction.reply({ content: "This command has no execute method :(" })
         }
     }
 })
@@ -71,14 +85,14 @@ const main = async () => {
             body: slashCommandsJsonArr
         });
         console.log("Added!!");
-        
+
         // fetching slashcommand list
         console.log("Fetching all registered commands!!");
         const registeredSlashCommands = await rest.get(Routes.applicationGuildCommands(CLIENT_ID!, GUILD_ID!));
         console.log(registeredSlashCommands);
         console.log("All registered command fetched");
 
-        
+
         console.log("Bot is going live....");
         // bot is live!!
         await client.login(BOT_TOKEN);
