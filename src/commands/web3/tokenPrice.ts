@@ -1,15 +1,27 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from '@discordjs/builders';
+import { tokenDetails } from '../../utils/tokenDetails';
 const tokenPrice: BaseSlashCommandI = {
     name: "tokenprice",
     execute(client, interaction) {
         if (interaction.isChatInputCommand()) {
-            const tokenName = interaction.options.getString("tokenname");
+            const tokenName= interaction.options.getString("tokenname");
+
             interaction.reply({
-                "content": `token searching for ${tokenName}`,
+                "content": `token searching for ${tokenName} with address ${tokenDetails[tokenName!].address}`,
             });
         }
     },
     jsonData() {
+
+        const tokenChoices = Object.values(tokenDetails).map((eachToken)=> {
+            const choice = {
+                name: eachToken.name,
+                value: eachToken.value,
+            }
+
+            return choice;
+        })
+
         return new SlashCommandBuilder()
             .setName(this.name)
             .setDescription("Know the current price of a token")
@@ -17,24 +29,7 @@ const tokenPrice: BaseSlashCommandI = {
                 return option.setName("tokenname")   // option details
                     .setDescription("Select a token")
                     .setRequired(true)
-                    .setChoices(
-                        {
-                            name: "Ether (Ethereum)",
-                            value: "ether"
-                        },
-                        {
-                            name: "Matic (Polygon)",
-                            value: "matic"
-                        },
-                        {
-                            name: "Cronos (Crypto)",
-                            value: "cronos"
-                        },
-                        {
-                            name: "Fantom",
-                            value: "fantom"
-                        }
-                    )
+                    .setChoices(...tokenChoices)
             })
             .toJSON()
     }
