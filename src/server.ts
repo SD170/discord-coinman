@@ -40,6 +40,7 @@ client.on("ready", () => {
 //joined a server
 client.on("guildCreate", guild => {
     // Create a new channel with permission overwrites
+    // **NEED** "Manage Channels" permission from oath2 invite
     guild.channels.create({
         name: 'coin-man-hub',
         type: ChannelType.GuildText
