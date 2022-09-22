@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/builders": "^1.2.0",
+    "@moralisweb3/evm-utils": "^2.5.5",
     "discord.js": "^14.3.0",
     "dotenv": "^16.0.2",
     "moralis": "^2.5.5"

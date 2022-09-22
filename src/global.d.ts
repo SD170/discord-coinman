@@ -11,4 +11,13 @@ declare global {
         execute:(client:Client, interaction:BaseInteraction)=>any,
         jsonData:()=>any;
     }
+
+    type eachTokenDetailsType = {
+        name: string,
+        value: string,
+        address: string
+    }
+    type tokenDetailsType = {
+        [name:string]:eachTokenDetailsType
+    }
 }

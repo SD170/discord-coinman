@@ -1,13 +1,17 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from '@discordjs/builders';
 import { tokenDetails } from '../../utils/tokenDetails';
+import { moralisTokenPriceFetcher } from '../../api/tokenPriceFetcher';
+
+
 const tokenPrice: BaseSlashCommandI = {
     name: "tokenprice",
-    execute(client, interaction) {
+    async execute (client, interaction) {
         if (interaction.isChatInputCommand()) {
             const tokenName= interaction.options.getString("tokenname");
-
+            const tokenDetail = tokenDetails[tokenName!];
+            const tokenPrice = await moralisTokenPriceFetcher(tokenDetail);
             interaction.reply({
-                "content": `token searching for ${tokenName} with address ${tokenDetails[tokenName!].address}`,
+                "content": `Price of ${tokenName} right now is ${tokenPrice} USD !!`,
             });
         }
     },

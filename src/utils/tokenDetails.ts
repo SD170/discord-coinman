@@ -1,11 +1,3 @@
-type eachTokenDetailsType = {
-    name: string,
-    value: string,
-    address: string
-}
-type tokenDetailsType = {
-    [name:string]:eachTokenDetailsType
-}
 export const tokenDetails:tokenDetailsType = {
     "ether": {
         name: "Ether (Ethereum)",
