@@ -47,16 +47,6 @@ client.on("guildCreate", guild => {
     })
 })
 
-// // removed from a server
-// client.on("guildDelete", guild => {
-//     // removed
-// })
-
-// client.on("messageCreate", (message) => {
-//     console.log(`Message from ${message.author.tag}`);
-//     // to see message.content we need GatewayIntentBits.MessageContent intent while instantiating the client
-//     // and also enable "MESSAGE CONTENT INTENT" from the bot menu 
-// })
 
 client.on("interactionCreate", async (interaction: BaseInteraction) => {
     if (interaction.isChatInputCommand()) {
@@ -82,7 +72,7 @@ const main = async () => {
         const slashCommandsJsonArr = client.slashCommands.map((cmd: BaseSlashCommandI) => cmd.jsonData())
 
         // adding the slashcommands to the discord guild
-        await rest.put(Routes.applicationGuildCommands(CLIENT_ID!, GUILD_ID!), {
+        await rest.put(Routes.applicationCommands(CLIENT_ID!), {
             body: slashCommandsJsonArr
         });
         console.log("Added!!");
@@ -108,3 +98,17 @@ const main = async () => {
 }
 
 main();
+
+
+
+
+// // removed from a server
+// client.on("guildDelete", guild => {
+//     // removed
+// })
+
+// client.on("messageCreate", (message) => {
+//     console.log(`Message from ${message.author.tag}`);
+//     // to see message.content we need GatewayIntentBits.MessageContent intent while instantiating the client
+//     // and also enable "MESSAGE CONTENT INTENT" from the bot menu 
+// })
