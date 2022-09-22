@@ -8,9 +8,13 @@ const tokenPrice: BaseSlashCommandI = {
     async execute (client, interaction) {
         if (interaction.isChatInputCommand()) {
             const tokenName= interaction.options.getString("tokenname");
+            console.log(tokenName);
             const tokenDetail = tokenDetails[tokenName!];
+            // interaction.reply() has a 3 second window, in those cases use defer reply
+            await interaction.deferReply();
             const tokenPrice = await moralisTokenPriceFetcher(tokenDetail);
-            interaction.reply({
+            console.log(tokenPrice);
+            await interaction.editReply({
                 "content": `Price of ${tokenName} right now is ${tokenPrice} USD !!`,
             });
         }

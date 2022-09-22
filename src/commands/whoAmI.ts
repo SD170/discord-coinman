@@ -1,4 +1,3 @@
-import { BaseSlashCommandI } from '../utils/BaseSlashCommand';
 import { SlashCommandBuilder } from '@discordjs/builders';
 const whoAmI: BaseSlashCommandI = {
     name: "whoami",

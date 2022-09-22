@@ -47,10 +47,10 @@ client.on("guildCreate", guild => {
     })
 })
 
-// removed from a server
-client.on("guildDelete", guild => {
-    // removed
-})
+// // removed from a server
+// client.on("guildDelete", guild => {
+//     // removed
+// })
 
 // client.on("messageCreate", (message) => {
 //     console.log(`Message from ${message.author.tag}`);
@@ -58,12 +58,12 @@ client.on("guildDelete", guild => {
 //     // and also enable "MESSAGE CONTENT INTENT" from the bot menu 
 // })
 
-client.on("interactionCreate", (interaction: BaseInteraction) => {
+client.on("interactionCreate", async (interaction: BaseInteraction) => {
     if (interaction.isChatInputCommand()) {
         const { commandName } = interaction;
         const cmd: BaseSlashCommandI = client.slashCommands.get(commandName);
         if (cmd) {
-            cmd.execute(client, interaction);
+            await cmd.execute(client, interaction);
         } else {
             interaction.reply({ content: "This command has no execute method :(" })
         }
