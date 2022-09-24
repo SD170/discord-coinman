@@ -1,20 +1,17 @@
-import redis, { createClient, RedisClientType } from "redis";
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.redisClient = exports.connectRedis = void 0;
+const redis_1 = require("redis");
 // entrypoint to interact with the database.
-
-let redisClient: RedisClientType;
-
+let redisClient;
+exports.redisClient = redisClient;
 const connectRedis = async () => {
-    const {REDIS_CONNECTION,REDIS_HOST,REDIS_PORT} = process.env;
-    const redisUrl = `${REDIS_CONNECTION}://${REDIS_HOST}:${REDIS_PORT}`; 
-    
-    redisClient = createClient({
+    const { REDIS_CONNECTION, REDIS_HOST, REDIS_PORT } = process.env;
+    const redisUrl = `${REDIS_CONNECTION}://${REDIS_HOST}:${REDIS_PORT}`;
+    exports.redisClient = redisClient = (0, redis_1.createClient)({
         url: redisUrl
     });
-    
     redisClient.on("error", (error) => console.error(`Redis error: ${error}`));
-    
-    
     redisClient.on("connect", (error) => {
         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
@@ -22,12 +19,6 @@ const connectRedis = async () => {
         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     });
-    
     await redisClient.connect();
 };
-
-
-export {
-    connectRedis,
-    redisClient
-};
+exports.connectRedis = connectRedis;

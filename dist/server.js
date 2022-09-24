@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const dotenv_1 = __importDefault(require("dotenv"));
 const registry_1 = require("./utils/registry");
+const redisConfig_1 = require("./cache/redisConfig");
 //load env vars
 dotenv_1.default.config({ path: __dirname + '/../.env' });
 /**
@@ -13,6 +14,8 @@ dotenv_1.default.config({ path: __dirname + '/../.env' });
  */
 // we need the BOT_TOKEN to login the bot
 const { BOT_TOKEN, CLIENT_ID, GUILD_ID } = process.env;
+// redis initialize
+(0, redisConfig_1.connectRedis)();
 // this allows us to recieve Guilds and GuildMessages events.
 const client = new discord_js_1.Client({
     intents: [discord_js_1.GatewayIntentBits.Guilds, discord_js_1.GatewayIntentBits.GuildMessages]
@@ -36,15 +39,6 @@ client.on("guildCreate", guild => {
         type: discord_js_1.ChannelType.GuildText
     });
 });
-// // removed from a server
-// client.on("guildDelete", guild => {
-//     // removed
-// })
-// client.on("messageCreate", (message) => {
-//     console.log(`Message from ${message.author.tag}`);
-//     // to see message.content we need GatewayIntentBits.MessageContent intent while instantiating the client
-//     // and also enable "MESSAGE CONTENT INTENT" from the bot menu 
-// })
 client.on("interactionCreate", async (interaction) => {
     if (interaction.isChatInputCommand()) {
         const { commandName } = interaction;
@@ -62,19 +56,20 @@ const main = async () => {
         console.log("Adding new (/) commands....");
         client.slashCommands = new discord_js_1.Collection();
         await (0, registry_1.registerCommands)(client, '../commands');
-        console.log(client.slashCommands);
+        // console.log(client.slashCommands);
         // formatting the commands as slashcommand json
         const slashCommandsJsonArr = client.slashCommands.map((cmd) => cmd.jsonData());
         // adding the slashcommands to the discord guild
+        // await rest.put(Routes.applicationCommands(CLIENT_ID!), {
         await rest.put(discord_js_1.Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
             body: slashCommandsJsonArr
         });
-        console.log("Added!!");
+        console.log("(/) commands added!!");
         // fetching slashcommand list
-        console.log("Fetching all registered commands!!");
-        const registeredSlashCommands = await rest.get(discord_js_1.Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID));
-        console.log(registeredSlashCommands);
-        console.log("All registered command fetched");
+        // console.log("Fetching all registered commands!!");
+        // const registeredSlashCommands = await rest.get(Routes.applicationGuildCommands(CLIENT_ID!, GUILD_ID!));
+        // console.log(registeredSlashCommands);
+        // console.log("All registered command fetched");
         console.log("Bot is going live....");
         // bot is live!!
         await client.login(BOT_TOKEN);
@@ -85,3 +80,12 @@ const main = async () => {
     }
 };
 main();
+// // removed from a server
+// client.on("guildDelete", guild => {
+//     // removed
+// })
+// client.on("messageCreate", (message) => {
+//     console.log(`Message from ${message.author.tag}`);
+//     // to see message.content we need GatewayIntentBits.MessageContent intent while instantiating the client
+//     // and also enable "MESSAGE CONTENT INTENT" from the bot menu 
+// })

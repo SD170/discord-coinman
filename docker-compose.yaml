@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  redis_cache:
+    image: redis:alpine
+    restart: always
+    volumes: 
+      - redis_cache_vol:/usr/src/data
+
+
+
+  # nodejs api service
+  node_coin_man:
+    build: .
+    
+    # or we can use a .env file
+    env_file:
+      - .env
+    environment:
+      MONGOHOST: mongo_db
+    
+    # Auto reload on changes in code:
+    # To ask docker to map the current directory outside container (the dot .) to 
+    # the working directory inside the container (/usr/src/app) as mentioned in the Dockerfile for nodeAPI
+    # we need a volume.
+
+    # now if we run with nodemon, docker can restart the server on code changes.
+    volumes:
+      - .:/usr/src/app
+
+    # we need the mongo_db service to run first
+    depends_on:
+      - redis_cache  # name of the mongoDB service
+
+volumes:
+  redis_cache_vol:
+    driver: local

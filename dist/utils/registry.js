@@ -33,16 +33,16 @@ async function registerCommands(client, dir = '') {
     const filePath = path_1.default.join(__dirname, dir);
     const files = await promises_1.default.readdir(filePath);
     for (const file of files) {
-        console.log('File: ', file);
+        // console.log('File: ', file);
         const stat = await promises_1.default.lstat(path_1.default.join(filePath, file));
         if (stat.isDirectory())
             await registerCommands(client, path_1.default.join(dir, file));
         if (file.endsWith('.js') || file.endsWith('.ts')) {
             const Command = await Promise.resolve().then(() => __importStar(require(path_1.default.join(filePath, file)))); // importing the command
             const cmd = Command.default; // extracting with type
-            console.log(cmd.name);
+            // console.log(cmd.name);
             client.slashCommands.set(cmd.name, cmd);
-            console.log(`Registering ${cmd.name}`);
+            // console.log(`Registering ${cmd.name}`);
         }
     }
 }
