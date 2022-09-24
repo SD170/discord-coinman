@@ -81,15 +81,15 @@ const main = async () => {
         await rest.put(Routes.applicationGuildCommands(CLIENT_ID!, GUILD_ID!), {
             body: slashCommandsJsonArr
         });
-        console.log("Added!!");
+        console.log("(/) commands added!!");
 
         // fetching slashcommand list
-        console.log("Fetching all registered commands!!");
+        // console.log("Fetching all registered commands!!");
 
         // const registeredSlashCommands = await rest.get(Routes.applicationGuildCommands(CLIENT_ID!, GUILD_ID!));
         // console.log(registeredSlashCommands);
         
-        console.log("All registered command fetched");
+        // console.log("All registered command fetched");
 
 
         console.log("Bot is going live....");
