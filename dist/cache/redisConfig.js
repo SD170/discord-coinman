@@ -11,7 +11,10 @@ const connectRedis = async () => {
     exports.redisClient = redisClient = (0, redis_1.createClient)({
         url: redisUrl
     });
-    redisClient.on("error", (error) => console.error(`Redis error: ${error}`));
+    redisClient.on("error", (error) => {
+        console.error(`Redis error: ${error}`);
+        console.log(`redisUrl: ${redisUrl}`);
+    });
     redisClient.on("connect", (error) => {
         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");

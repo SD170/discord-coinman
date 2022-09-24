@@ -60,8 +60,8 @@ const main = async () => {
         // formatting the commands as slashcommand json
         const slashCommandsJsonArr = client.slashCommands.map((cmd) => cmd.jsonData());
         // adding the slashcommands to the discord guild
-        // await rest.put(Routes.applicationCommands(CLIENT_ID!), {
-        await rest.put(discord_js_1.Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
+        // await rest.put(Routes.applicationGuildCommands(CLIENT_ID!, GUILD_ID!), {
+        await rest.put(discord_js_1.Routes.applicationCommands(CLIENT_ID), {
             body: slashCommandsJsonArr
         });
         console.log("(/) commands added!!");
