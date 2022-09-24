@@ -17,7 +17,7 @@ services:
     env_file:
       - .env
     environment:
-      MONGOHOST: mongo_db
+      REDIS_HOST: redis_cache
     
     # Auto reload on changes in code:
     # To ask docker to map the current directory outside container (the dot .) to 
@@ -28,9 +28,9 @@ services:
     volumes:
       - .:/usr/src/app
 
-    # we need the mongo_db service to run first
+    # we need the redis_cache service to run first
     depends_on:
-      - redis_cache  # name of the mongoDB service
+      - redis_cache  # name of the redis service
 
 volumes:
   redis_cache_vol:
