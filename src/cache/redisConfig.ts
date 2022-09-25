@@ -5,8 +5,8 @@ import redis, { createClient, RedisClientType } from "redis";
 let redisClient: RedisClientType;
 
 const connectRedis = async () => {
-    const { REDIS_CONNECTION, REDIS_HOST, REDIS_PASSWORD, REDIS_CONTAINER_REG_DOM, REDIS_PORT } = process.env;
-    const redisUrl = `${REDIS_CONNECTION}://${REDIS_HOST}:${REDIS_PASSWORD}@${REDIS_CONTAINER_REG_DOM}:${REDIS_PORT}`;
+    const { REDISUSER, REDISPASSWORD, REDISHOST, REDISPORT } = process.env;
+    const redisUrl = `redis://${REDISUSER}:${REDISPASSWORD}@${REDISHOST}:${REDISPORT}`;
 
     redisClient = createClient({
         url: redisUrl
