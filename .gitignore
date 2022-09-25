@@ -1,2 +1,7 @@
 /node_modules
 *.env
+
+# for test
+.dockerignore
+docker-compose.yaml
+Dockerfile
