@@ -2,6 +2,7 @@ import { SlashCommandBuilder, SlashCommandStringOption } from '@discordjs/builde
 import { tokenDetails } from '../../utils/tokenDetails';
 import { moralisTokenPriceFetcher } from '../../api/tokenPriceFetcher';
 import { fetchCachePrice, saveCachePrice } from '../../cache/redisServices';
+import { publishMessage } from '../../kafka/kafkaProduce';
 
 
 const tokenPrice: BaseSlashCommandI = {
@@ -19,8 +20,19 @@ const tokenPrice: BaseSlashCommandI = {
             if (!tokenPrice) {
                 console.log("not found in cache");
                 tokenPrice = await moralisTokenPriceFetcher(tokenDetail);
-                // caching
-                await saveCachePrice(tokenName!, tokenPrice);
+
+                /**
+                 * Comment out if kafka pub/sub not needed, then directy save to redis
+                 */
+                // substiture caching: send message to kafka broker
+                const msgObj = {
+                    tokenName:tokenName!,
+                    tokenPrice
+                }
+                await publishMessage(msgObj);
+
+                // caching in redis
+                // await saveCachePrice(tokenName!, tokenPrice);
             }
 
 

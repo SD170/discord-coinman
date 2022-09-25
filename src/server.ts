@@ -5,6 +5,7 @@ import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builde
 import dotenv from "dotenv";
 import { registerCommands } from './utils/registry';
 import { connectRedis } from './cache/redisConfig';
+import { runConsumer } from './kafka/runConsumer';
 
 
 //load env vars
@@ -15,9 +16,13 @@ dotenv.config({ path: __dirname + '/../.env' });
 // we need the BOT_TOKEN to login the bot
 const { BOT_TOKEN, CLIENT_ID, GUILD_ID } = process.env;
 
+console.log(process.env.CONFLUENT_KEY);
 
 // redis initialize
 connectRedis();
+
+// running kafka consumer before saving to redis
+runConsumer();
 
 
 // this allows us to recieve Guilds and GuildMessages events.
@@ -77,8 +82,8 @@ const main = async () => {
         const slashCommandsJsonArr = client.slashCommands.map((cmd: BaseSlashCommandI) => cmd.jsonData())
 
         // adding the slashcommands to the discord guild
-        // await rest.put(Routes.applicationGuildCommands(CLIENT_ID!, GUILD_ID!), {
-        await rest.put(Routes.applicationCommands(CLIENT_ID!), {
+        // await rest.put(Routes.applicationCommands(CLIENT_ID!), {
+        await rest.put(Routes.applicationGuildCommands(CLIENT_ID!, GUILD_ID!), {
             body: slashCommandsJsonArr
         });
         console.log("(/) commands added!!");
@@ -88,7 +93,7 @@ const main = async () => {
 
         // const registeredSlashCommands = await rest.get(Routes.applicationGuildCommands(CLIENT_ID!, GUILD_ID!));
         // console.log(registeredSlashCommands);
-        
+
         // console.log("All registered command fetched");
 
 
