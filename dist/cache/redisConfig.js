@@ -6,8 +6,9 @@ const redis_1 = require("redis");
 let redisClient;
 exports.redisClient = redisClient;
 const connectRedis = async () => {
-    const { REDIS_CONNECTION, REDIS_HOST, REDIS_PORT } = process.env;
-    const redisUrl = `${REDIS_CONNECTION}://${REDIS_HOST}:${REDIS_PORT}`;
+    const { REDISUSER, REDISPASSWORD, REDISHOST, REDISPORT } = process.env;
+    const redisUrl = `redis://${REDISUSER}:${REDISPASSWORD}@${REDISHOST}:${REDISPORT}`;
+    // const redisUrl = `redis://${REDISHOST}:${REDISPORT}`;
     exports.redisClient = redisClient = (0, redis_1.createClient)({
         url: redisUrl
     });

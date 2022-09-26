@@ -4,6 +4,7 @@ const builders_1 = require("@discordjs/builders");
 const tokenDetails_1 = require("../../utils/tokenDetails");
 const tokenPriceFetcher_1 = require("../../api/tokenPriceFetcher");
 const redisServices_1 = require("../../cache/redisServices");
+const kafkaProduce_1 = require("../../kafka/kafkaProduce");
 const tokenPrice = {
     name: "tokenprice",
     async execute(client, interaction) {
@@ -17,8 +18,17 @@ const tokenPrice = {
             if (!tokenPrice) {
                 console.log("not found in cache");
                 tokenPrice = await (0, tokenPriceFetcher_1.moralisTokenPriceFetcher)(tokenDetail);
-                // caching
-                await (0, redisServices_1.saveCachePrice)(tokenName, tokenPrice);
+                /**
+                 * Comment out if kafka pub/sub not needed, then directy save to redis
+                 */
+                // substiture caching: send message to kafka broker
+                const msgObj = {
+                    tokenName: tokenName,
+                    tokenPrice
+                };
+                await (0, kafkaProduce_1.publishMessage)(msgObj);
+                // caching in redis
+                // await saveCachePrice(tokenName!, tokenPrice);
             }
             console.log(tokenPrice);
             await interaction.editReply({

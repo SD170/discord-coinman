@@ -7,6 +7,7 @@ const discord_js_1 = require("discord.js");
 const dotenv_1 = __importDefault(require("dotenv"));
 const registry_1 = require("./utils/registry");
 const redisConfig_1 = require("./cache/redisConfig");
+const runConsumer_1 = require("./kafka/runConsumer");
 //load env vars
 dotenv_1.default.config({ path: __dirname + '/../.env' });
 /**
@@ -14,8 +15,11 @@ dotenv_1.default.config({ path: __dirname + '/../.env' });
  */
 // we need the BOT_TOKEN to login the bot
 const { BOT_TOKEN, CLIENT_ID, GUILD_ID } = process.env;
+console.log(process.env.CONFLUENT_KEY);
 // redis initialize
 (0, redisConfig_1.connectRedis)();
+// running kafka consumer before saving to redis
+(0, runConsumer_1.runConsumer)();
 // this allows us to recieve Guilds and GuildMessages events.
 const client = new discord_js_1.Client({
     intents: [discord_js_1.GatewayIntentBits.Guilds, discord_js_1.GatewayIntentBits.GuildMessages]
@@ -60,8 +64,8 @@ const main = async () => {
         // formatting the commands as slashcommand json
         const slashCommandsJsonArr = client.slashCommands.map((cmd) => cmd.jsonData());
         // adding the slashcommands to the discord guild
-        // await rest.put(Routes.applicationGuildCommands(CLIENT_ID!, GUILD_ID!), {
-        await rest.put(discord_js_1.Routes.applicationCommands(CLIENT_ID), {
+        // await rest.put(Routes.applicationCommands(CLIENT_ID!), {
+        await rest.put(discord_js_1.Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
             body: slashCommandsJsonArr
         });
         console.log("(/) commands added!!");
