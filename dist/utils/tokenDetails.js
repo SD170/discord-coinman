@@ -10,12 +10,12 @@ exports.tokenDetails = {
     "matic": {
         name: "Matic (Polygon)",
         value: "matic",
-        address: "0x0000000000000000000000000000000000001010"
+        address: "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270"
     },
-    "cronos": {
-        name: "Cronos (Crypto)",
-        value: "cronos",
-        address: "0xAdA58DF0F643D959C2A47c9D4d4c1a4deFe3F11C"
+    "tether": {
+        name: "(PoS) Tether USD",
+        value: "tether",
+        address: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
     },
     "dai": {
         name: "(PoS) DAI Stablecoin",
@@ -26,5 +26,15 @@ exports.tokenDetails = {
         name: "ChainLink",
         value: "chainlink",
         address: "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39"
+    },
+    "aave": {
+        name: "Aave (PoS)",
+        value: "aave",
+        address: "0xD6DF932A45C0f255f85145f286eA0b292B21C90B"
+    },
+    "beefy": {
+        name: "beefy.finance",
+        value: "beefy",
+        address: "0xFbdd194376de19a88118e84E279b977f165d01b8"
     }
 };

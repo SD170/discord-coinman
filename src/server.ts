@@ -16,7 +16,7 @@ dotenv.config({ path: __dirname + '/../.env' });
 // we need the BOT_TOKEN to login the bot
 const { BOT_TOKEN, CLIENT_ID, GUILD_ID } = process.env;
 
-console.log(process.env.CONFLUENT_KEY);
+// console.log(process.env.CONFLUENT_KEY);
 
 // redis initialize
 connectRedis();

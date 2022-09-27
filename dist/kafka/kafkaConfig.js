@@ -8,7 +8,7 @@ const kafkajs_1 = require("kafkajs");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({ path: __dirname + '/../../.env' });
 const { CONFLUENT_KEY: username, CONFLUENT_SECRET: password } = process.env;
-console.log(process.env.CONFLUENT_KEY, password);
+// console.log(process.env.CONFLUENT_KEY,password);
 if (!username || !password) {
     console.log("No key/username and secret/password for kafka, please provide those");
     process.exit(0);

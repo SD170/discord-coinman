@@ -9,6 +9,7 @@ const connectRedis = async () => {
     const { REDISUSER, REDISPASSWORD, REDISHOST, REDISPORT } = process.env;
     const redisUrl = `redis://${REDISUSER}:${REDISPASSWORD}@${REDISHOST}:${REDISPORT}`;
     // const redisUrl = `redis://${REDISHOST}:${REDISPORT}`;
+    console.log(redisUrl);
     exports.redisClient = redisClient = (0, redis_1.createClient)({
         url: redisUrl
     });
