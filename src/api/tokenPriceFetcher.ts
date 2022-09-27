@@ -5,7 +5,7 @@ import { usdFormatter } from '../utils/currencyFormatter';
 
 export const moralisTokenPriceFetcher = async (tokenDetail: eachTokenDetailsType): Promise<string> => {
     const { MORALIS_API_KEY } = process.env;
-    const chain = EvmChain.ETHEREUM;
+    const chain = EvmChain.POLYGON;
 
     const { address } = tokenDetail;
 

@@ -1,22 +1,27 @@
-export const tokenDetails:tokenDetailsType = {
+export const tokenDetails: tokenDetailsType = {
     "ether": {
         name: "Ether (Ethereum)",
         value: "ether",
-        address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" // ethereum wrapped address
+        address: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619" // ethereum wrapped address  
     },
     "matic": {
         name: "Matic (Polygon)",
         value: "matic",
-        address: "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
+        address: "0x0000000000000000000000000000000000001010"
     },
     "cronos": {
         name: "Cronos (Crypto)",
         value: "cronos",
-        address: "0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b"
+        address: "0xAdA58DF0F643D959C2A47c9D4d4c1a4deFe3F11C"
     },
-    "fantom": {
-        name: "Fantom",
-        value: "fantom",
-        address: "0x4e15361fd6b4bb609fa63c81a2be19d873717870"
+    "dai": {
+        name: "(PoS) DAI Stablecoin",
+        value: "dai",
+        address: "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063"
+    },
+    "chainlink": {
+        name: "ChainLink",
+        value: "chainlink",
+        address: "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39"
     }
 }
