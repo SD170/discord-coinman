@@ -9,7 +9,7 @@ const evm_utils_1 = require("@moralisweb3/evm-utils");
 const currencyFormatter_1 = require("../utils/currencyFormatter");
 const moralisTokenPriceFetcher = async (tokenDetail) => {
     const { MORALIS_API_KEY } = process.env;
-    const chain = evm_utils_1.EvmChain.ETHEREUM;
+    const chain = evm_utils_1.EvmChain.POLYGON;
     const { address } = tokenDetail;
     await moralis_1.default.start({
         apiKey: MORALIS_API_KEY,
